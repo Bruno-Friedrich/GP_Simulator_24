@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "bxO/fKH+wb5u3cyueTllavUUPfw+OdUHU40L+Hi+nfI+SExh/1nv4jMFeH/n+pstSAADWXmrMaKPbNDML03d2w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\bruno\\Desktop\\Coding\\Estudos\\Projetos\\GP_Simulator_24\\GPManager_Editor\\GPManager_Editor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\bruno\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\bruno\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\bruno\\.nuget\\packages\\npgsql\\8.0.3\\npgsql.8.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

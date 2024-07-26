@@ -1,0 +1,344 @@
+CREATE SCHEMA GPManager;
+
+SET search_path TO GPManager; -- Usado para referenciar a qual pasta de tabelas estamos utilizando
+
+CREATE TABLE Pais(
+	ID SERIAL,
+	NOME VARCHAR(100),
+	ISO CHAR(2), 
+	PRIMARY KEY(ID)
+);
+
+CREATE TABLE Piloto(
+	ID INTEGER,
+	ID_PAIS INTEGER, 
+	NOME VARCHAR(50),
+	IDADE INTEGER,
+	EQUIPE INTEGER,
+	STATUS VARCHAR(20),
+    LA INTEGER CHECK (LA BETWEEN 0 AND 100),
+    CO INTEGER CHECK (CO BETWEEN 0 AND 100),
+    UL INTEGER CHECK (UL BETWEEN 0 AND 100),
+    EX INTEGER CHECK (EX BETWEEN 0 AND 100),
+    RA INTEGER CHECK (RA BETWEEN 0 AND 100),
+    CH INTEGER CHECK (CH BETWEEN 0 AND 100),
+    AC INTEGER CHECK (AC BETWEEN 0 AND 100),
+    FI INTEGER CHECK (FI BETWEEN 0 AND 100),
+    POT INTEGER CHECK (POT BETWEEN 0 AND 100),
+	AUGE INTEGER,
+	APOS BOOLEAN,
+	TITULOS INTEGER,
+	VITORIAS INTEGER,
+	POLES INTEGER,
+	PODIOS INTEGER,
+	GPs INTEGER,
+	PRIMARY KEY (ID),
+	FOREIGN KEY(ID_PAIS) REFERENCES Pais(ID)
+);
+
+CREATE TABLE Circuito(
+	ID INTEGER,
+	NUM INTEGER,
+	ID_PAIS INTEGER, 
+	PROVA VARCHAR(100),
+	CIRCUITO VARCHAR(100),
+	RETAS INTEGER CHECK (RETAS BETWEEN 0 AND 100),
+	CURVAS INTEGER CHECK (CURVAS BETWEEN 0 AND 100),
+	VOLTAS INTEGER,
+	TEMPO_BASE TIME(3),
+	PRIMARY KEY (ID),
+	FOREIGN KEY(ID_PAIS) REFERENCES Pais(ID)
+);
+
+CREATE TABLE Motor(
+	ID INTEGER,
+	ID_PAIS_MOTOR INTEGER, 
+	FORNECEDORA VARCHAR(100),
+	POTENCIA INTEGER,
+	PRIMARY KEY(ID),
+	FOREIGN KEY(ID_PAIS_MOTOR) REFERENCES PAIS(ID)
+);
+
+CREATE TABLE Equipe(
+	ID INTEGER,
+	ID_PAIS INTEGER, 
+	NOME VARCHAR(100),	
+	COR1 CHAR(7),
+	COR2 CHAR(7),
+	PILOTO1 INTEGER,
+	PILOTO2 INTEGER,
+	PILOTOTESTES INTEGER,
+    AERO INTEGER CHECK (AERO BETWEEN 0 AND 100),
+    CAMBIO INTEGER CHECK (CAMBIO BETWEEN 0 AND 100),
+    FREIO INTEGER CHECK (FREIO BETWEEN 0 AND 100),
+    ELETR INTEGER CHECK (ELETR BETWEEN 0 AND 100),
+    DIREC INTEGER CHECK (DIREC BETWEEN 0 AND 100),
+    CONFI INTEGER CHECK (CONFI BETWEEN 0 AND 100),
+	ULT_ANO INTEGER,
+	ID_MOTOR INTEGER,
+	PROPRIO BOOLEAN,
+	FOREIGN KEY(ID_PAIS) REFERENCES Pais(ID),
+	FOREIGN KEY(ID_MOTOR) REFERENCES Motor(ID), 
+	FOREIGN KEY(PILOTO1) REFERENCES Piloto(ID),
+	FOREIGN KEY(PILOTO2) REFERENCES Piloto(ID),
+	FOREIGN KEY(PILOTOTESTES) REFERENCES Piloto(ID),
+	PRIMARY KEY(ID)
+);
+
+CREATE TABLE HallDaFama(
+	ID INTEGER,
+	ID_PAIS INTEGER,
+	NOME VARCHAR(100),
+	Titulos INTEGER,
+	Vitoria INTEGER,
+	Poles INTEGER,
+	GPs INTEGER,
+	SCORE FLOAT,
+	PRIMARY KEY(ID),
+	FOREIGN KEY(ID_PAIS) REFERENCES Pais(ID)
+);
+
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+------------------------------- INSERTS ------------------------------- 
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+INSERT INTO PAIS (iso, nome) VALUES ('AF', 'Afeganistão');
+INSERT INTO PAIS (iso, nome) VALUES ('AL', 'Albânia');
+INSERT INTO PAIS (iso, nome) VALUES ('DZ', 'Algéria');
+INSERT INTO PAIS (iso, nome) VALUES ('AS', 'Samoa Americana');
+INSERT INTO PAIS (iso, nome) VALUES ('AD', 'Andorra');
+INSERT INTO PAIS (iso, nome) VALUES ('AO', 'Angola');
+INSERT INTO PAIS (iso, nome) VALUES ('AI', 'Anguilla');
+INSERT INTO PAIS (iso, nome) VALUES ('AQ', 'Antártida');
+INSERT INTO PAIS (iso, nome) VALUES ('AG', 'Antigua e Barbuda');
+INSERT INTO PAIS (iso, nome) VALUES ('AR', 'Argentina');
+INSERT INTO PAIS (iso, nome) VALUES ('AM', 'Armênia');
+INSERT INTO PAIS (iso, nome) VALUES ('AW', 'Aruba');
+INSERT INTO PAIS (iso, nome) VALUES ('AU', 'Austrália');
+INSERT INTO PAIS (iso, nome) VALUES ('AT', 'Áustria');
+INSERT INTO PAIS (iso, nome) VALUES ('AZ', 'Azerbaijão');
+INSERT INTO PAIS (iso, nome) VALUES ('BS', 'Bahamas');
+INSERT INTO PAIS (iso, nome) VALUES ('BH', 'Bahrein');
+INSERT INTO PAIS (iso, nome) VALUES ('BD', 'Bangladesh');
+INSERT INTO PAIS (iso, nome) VALUES ('BB', 'Barbados');
+INSERT INTO PAIS (iso, nome) VALUES ('BY', 'Bielorrússia');
+INSERT INTO PAIS (iso, nome) VALUES ('BE', 'Bélgica');
+INSERT INTO PAIS (iso, nome) VALUES ('BZ', 'Belize');
+INSERT INTO PAIS (iso, nome) VALUES ('BJ', 'Benin');
+INSERT INTO PAIS (iso, nome) VALUES ('BM', 'Bermuda');
+INSERT INTO PAIS (iso, nome) VALUES ('BT', 'Butão');
+INSERT INTO PAIS (iso, nome) VALUES ('BO', 'Bolívia');
+INSERT INTO PAIS (iso, nome) VALUES ('BA', 'Bósnia e Herzegovina');
+INSERT INTO PAIS (iso, nome) VALUES ('BW', 'Botswana');
+INSERT INTO PAIS (iso, nome) VALUES ('BV', 'Ilha Bouvet');
+INSERT INTO PAIS (iso, nome) VALUES ('BR', 'Brasil');
+INSERT INTO PAIS (iso, nome) VALUES ('IO', 'Território Britânico do Oceano Índico');
+INSERT INTO PAIS (iso, nome) VALUES ('BN', 'Brunei');
+INSERT INTO PAIS (iso, nome) VALUES ('BG', 'Bulgária');
+INSERT INTO PAIS (iso, nome) VALUES ('BF', 'Burkina Faso');
+INSERT INTO PAIS (iso, nome) VALUES ('BI', 'Burundi');
+INSERT INTO PAIS (iso, nome) VALUES ('KH', 'Camboja');
+INSERT INTO PAIS (iso, nome) VALUES ('CM', 'Camarões');
+INSERT INTO PAIS (iso, nome) VALUES ('CA', 'Canadá');
+INSERT INTO PAIS (iso, nome) VALUES ('CV', 'Cabo Verde');
+INSERT INTO PAIS (iso, nome) VALUES ('KY', 'Ilhas Cayman');
+INSERT INTO PAIS (iso, nome) VALUES ('CF', 'República Centro-Africana');
+INSERT INTO PAIS (iso, nome) VALUES ('TD', 'Chade');
+INSERT INTO PAIS (iso, nome) VALUES ('CL', 'Chile');
+INSERT INTO PAIS (iso, nome) VALUES ('CN', 'China');
+INSERT INTO PAIS (iso, nome) VALUES ('CX', 'Ilha Christmas');
+INSERT INTO PAIS (iso, nome) VALUES ('CC', 'Ilhas Cocos (Keeling)');
+INSERT INTO PAIS (iso, nome) VALUES ('CO', 'Colômbia');
+INSERT INTO PAIS (iso, nome) VALUES ('KM', 'Comores');
+INSERT INTO PAIS (iso, nome) VALUES ('CG', 'Congo');
+INSERT INTO PAIS (iso, nome) VALUES ('CD', 'Congo (DR)');
+INSERT INTO PAIS (iso, nome) VALUES ('CK', 'Ilhas Cook');
+INSERT INTO PAIS (iso, nome) VALUES ('CR', 'Costa Rica');
+INSERT INTO PAIS (iso, nome) VALUES ('CI', 'Costa do Marfim');
+INSERT INTO PAIS (iso, nome) VALUES ('HR', 'Croácia');
+INSERT INTO PAIS (iso, nome) VALUES ('CU', 'Cuba');
+INSERT INTO PAIS (iso, nome) VALUES ('CY', 'Chipre');
+INSERT INTO PAIS (iso, nome) VALUES ('CZ', 'República Tcheca');
+INSERT INTO PAIS (iso, nome) VALUES ('DK', 'Dinamarca');
+INSERT INTO PAIS (iso, nome) VALUES ('DJ', 'Djibuti');
+INSERT INTO PAIS (iso, nome) VALUES ('DM', 'Dominica');
+INSERT INTO PAIS (iso, nome) VALUES ('DO', 'República Dominicana');
+INSERT INTO PAIS (iso, nome) VALUES ('EC', 'Equador');
+INSERT INTO PAIS (iso, nome) VALUES ('EG', 'Egito');
+INSERT INTO PAIS (iso, nome) VALUES ('SV', 'El Salvador');
+INSERT INTO PAIS (iso, nome) VALUES ('GQ', 'Guiné Equatorial');
+INSERT INTO PAIS (iso, nome) VALUES ('ER', 'Eritreia');
+INSERT INTO PAIS (iso, nome) VALUES ('EE', 'Estônia');
+INSERT INTO PAIS (iso, nome) VALUES ('ET', 'Etiópia');
+INSERT INTO PAIS (iso, nome) VALUES ('FK', 'Ilhas Malvinas');
+INSERT INTO PAIS (iso, nome) VALUES ('FO', 'Ilhas Faroe');
+INSERT INTO PAIS (iso, nome) VALUES ('FJ', 'Fiji');
+INSERT INTO PAIS (iso, nome) VALUES ('FI', 'Finlândia');
+INSERT INTO PAIS (iso, nome) VALUES ('FR', 'França');
+INSERT INTO PAIS (iso, nome) VALUES ('GF', 'Guiana Francesa');
+INSERT INTO PAIS (iso, nome) VALUES ('PF', 'Polinésia Francesa');
+INSERT INTO PAIS (iso, nome) VALUES ('TF', 'Terras Austrais e Antárticas Francesas');
+INSERT INTO PAIS (iso, nome) VALUES ('GA', 'Gabão');
+INSERT INTO PAIS (iso, nome) VALUES ('GM', 'Gâmbia');
+INSERT INTO PAIS (iso, nome) VALUES ('GE', 'Geórgia');
+INSERT INTO PAIS (iso, nome) VALUES ('DE', 'Alemanha');
+INSERT INTO PAIS (iso, nome) VALUES ('GH', 'Gana');
+INSERT INTO PAIS (iso, nome) VALUES ('GI', 'Gibraltar');
+INSERT INTO PAIS (iso, nome) VALUES ('GR', 'Grécia');
+INSERT INTO PAIS (iso, nome) VALUES ('GL', 'Groelândia');
+INSERT INTO PAIS (iso, nome) VALUES ('GD', 'Granada');
+INSERT INTO PAIS (iso, nome) VALUES ('GP', 'Guadalupe');
+INSERT INTO PAIS (iso, nome) VALUES ('GU', 'Guão');
+INSERT INTO PAIS (iso, nome) VALUES ('GT', 'Guatemala');
+INSERT INTO PAIS (iso, nome) VALUES ('GN', 'Guiné');
+INSERT INTO PAIS (iso, nome) VALUES ('GW', 'Guiné-Bissau');
+INSERT INTO PAIS (iso, nome) VALUES ('GY', 'Guiana');
+INSERT INTO PAIS (iso, nome) VALUES ('HT', 'Haiti');
+INSERT INTO PAIS (iso, nome) VALUES ('HM', 'Ilhas Heard e McDonald');
+INSERT INTO PAIS (iso, nome) VALUES ('VA', 'Vaticano');
+INSERT INTO PAIS (iso, nome) VALUES ('HN', 'Honduras');
+INSERT INTO PAIS (iso, nome) VALUES ('HK', 'Hong Kong');
+INSERT INTO PAIS (iso, nome) VALUES ('HU', 'Hungria');
+INSERT INTO PAIS (iso, nome) VALUES ('IS', 'Islândia');
+INSERT INTO PAIS (iso, nome) VALUES ('IN', 'Índia');
+INSERT INTO PAIS (iso, nome) VALUES ('ID', 'Indonésia');
+INSERT INTO PAIS (iso, nome) VALUES ('IR', 'Iran');
+INSERT INTO PAIS (iso, nome) VALUES ('IQ', 'Iraque');
+INSERT INTO PAIS (iso, nome) VALUES ('IE', 'Irlanda');
+INSERT INTO PAIS (iso, nome) VALUES ('IL', 'Israel');
+INSERT INTO PAIS (iso, nome) VALUES ('IT', 'Itália');
+INSERT INTO PAIS (iso, nome) VALUES ('JM', 'Jamaica');
+INSERT INTO PAIS (iso, nome) VALUES ('JP', 'Japão');
+INSERT INTO PAIS (iso, nome) VALUES ('JO', 'Jordânia');
+INSERT INTO PAIS (iso, nome) VALUES ('KZ', 'Cazaquistão');
+INSERT INTO PAIS (iso, nome) VALUES ('KE', 'Quênia');
+INSERT INTO PAIS (iso, nome) VALUES ('KI', 'Kiribati');
+INSERT INTO PAIS (iso, nome) VALUES ('KP', 'Coreia do Norte');
+INSERT INTO PAIS (iso, nome) VALUES ('KR', 'Coreia do Sul');
+INSERT INTO PAIS (iso, nome) VALUES ('KW', 'Kuwait');
+INSERT INTO PAIS (iso, nome) VALUES ('KG', 'Quirguistão');
+INSERT INTO PAIS (iso, nome) VALUES ('LA', 'Laos');
+INSERT INTO PAIS (iso, nome) VALUES ('LV', 'Letônia');
+INSERT INTO PAIS (iso, nome) VALUES ('LB', 'Líbano');
+INSERT INTO PAIS (iso, nome) VALUES ('LS', 'Lesoto');
+INSERT INTO PAIS (iso, nome) VALUES ('LR', 'Libéria');
+INSERT INTO PAIS (iso, nome) VALUES ('LY', 'Líbia');
+INSERT INTO PAIS (iso, nome) VALUES ('LI', 'Liechtenstein');
+INSERT INTO PAIS (iso, nome) VALUES ('LT', 'Lituânia');
+INSERT INTO PAIS (iso, nome) VALUES ('LU', 'Luxemburgo');
+INSERT INTO PAIS (iso, nome) VALUES ('MO', 'Macao');
+INSERT INTO PAIS (iso, nome) VALUES ('MK', 'Macedônia');
+INSERT INTO PAIS (iso, nome) VALUES ('MG', 'Madagascar');
+INSERT INTO PAIS (iso, nome) VALUES ('MW', 'Malawi');
+INSERT INTO PAIS (iso, nome) VALUES ('MY', 'Malásia');
+INSERT INTO PAIS (iso, nome) VALUES ('MV', 'Maldivas');
+INSERT INTO PAIS (iso, nome) VALUES ('ML', 'Mali');
+INSERT INTO PAIS (iso, nome) VALUES ('MT', 'Malta');
+INSERT INTO PAIS (iso, nome) VALUES ('MH', 'Ilhas Marshall');
+INSERT INTO PAIS (iso, nome) VALUES ('MQ', 'Martinica');
+INSERT INTO PAIS (iso, nome) VALUES ('MR', 'Mauritânia');
+INSERT INTO PAIS (iso, nome) VALUES ('MU', 'Maurício');
+INSERT INTO PAIS (iso, nome) VALUES ('YT', 'Mayotte');
+INSERT INTO PAIS (iso, nome) VALUES ('MX', 'México');
+INSERT INTO PAIS (iso, nome) VALUES ('FM', 'Micronésia');
+INSERT INTO PAIS (iso, nome) VALUES ('MD', 'Moldova');
+INSERT INTO PAIS (iso, nome) VALUES ('MC', 'Mônaco');
+INSERT INTO PAIS (iso, nome) VALUES ('MN', 'Mongólia');
+INSERT INTO PAIS (iso, nome) VALUES ('MS', 'Montserrat');
+INSERT INTO PAIS (iso, nome) VALUES ('MA', 'Marrocos');
+INSERT INTO PAIS (iso, nome) VALUES ('MZ', 'Moçambique');
+INSERT INTO PAIS (iso, nome) VALUES ('MM', 'Birmânia');
+INSERT INTO PAIS (iso, nome) VALUES ('NA', 'Namíbia');
+INSERT INTO PAIS (iso, nome) VALUES ('NR', 'Nauru');
+INSERT INTO PAIS (iso, nome) VALUES ('NP', 'Nepal');
+INSERT INTO PAIS (iso, nome) VALUES ('NL', 'Holanda');
+INSERT INTO PAIS (iso, nome) VALUES ('AN', 'Antilhas Holandesas');
+INSERT INTO PAIS (iso, nome) VALUES ('NC', 'Nova Caledônia');
+INSERT INTO PAIS (iso, nome) VALUES ('NZ', 'Nova Zelândia');
+INSERT INTO PAIS (iso, nome) VALUES ('NI', 'Nicarágua');
+INSERT INTO PAIS (iso, nome) VALUES ('NE', 'Niger');
+INSERT INTO PAIS (iso, nome) VALUES ('NG', 'Nigéria');
+INSERT INTO PAIS (iso, nome) VALUES ('NU', 'Niue');
+INSERT INTO PAIS (iso, nome) VALUES ('NF', 'Ilha Norfolk');
+INSERT INTO PAIS (iso, nome) VALUES ('MP', 'Ilhas Marianas do Norte');
+INSERT INTO PAIS (iso, nome) VALUES ('NO', 'Noruega');
+INSERT INTO PAIS (iso, nome) VALUES ('OM', 'Omã');
+INSERT INTO PAIS (iso, nome) VALUES ('PK', 'Paquistão');
+INSERT INTO PAIS (iso, nome) VALUES ('PW', 'Palau');
+INSERT INTO PAIS (iso, nome) VALUES ('PS', 'Palestina');
+INSERT INTO PAIS (iso, nome) VALUES ('PA', 'Panamá');
+INSERT INTO PAIS (iso, nome) VALUES ('PG', 'Papua-Nova Guiné');
+INSERT INTO PAIS (iso, nome) VALUES ('PY', 'Paraguai');
+INSERT INTO PAIS (iso, nome) VALUES ('PE', 'Peru');
+INSERT INTO PAIS (iso, nome) VALUES ('PH', 'Filipinas');
+INSERT INTO PAIS (iso, nome) VALUES ('PN', 'Ilhas Picárnia');
+INSERT INTO PAIS (iso, nome) VALUES ('PL', 'Polônia');
+INSERT INTO PAIS (iso, nome) VALUES ('PT', 'Portugal');
+INSERT INTO PAIS (iso, nome) VALUES ('PR', 'Porto Rico');
+INSERT INTO PAIS (iso, nome) VALUES ('QA', 'Catar');
+INSERT INTO PAIS (iso, nome) VALUES ('RE', 'Reunião');
+INSERT INTO PAIS (iso, nome) VALUES ('RO', 'Romênia');
+INSERT INTO PAIS (iso, nome) VALUES ('RU', 'Rússia');
+INSERT INTO PAIS (iso, nome) VALUES ('RW', 'Ruanda');
+INSERT INTO PAIS (iso, nome) VALUES ('SH', 'Santa Helena');
+INSERT INTO PAIS (iso, nome) VALUES ('KN', 'São Cristóvão');
+INSERT INTO PAIS (iso, nome) VALUES ('LC', 'Santa Lúcia');
+INSERT INTO PAIS (iso, nome) VALUES ('PM', 'São Pedro e Miquelon');
+INSERT INTO PAIS (iso, nome) VALUES ('VC', 'São Vicente e Granadinas');
+INSERT INTO PAIS (iso, nome) VALUES ('WS', 'Samoa');
+INSERT INTO PAIS (iso, nome) VALUES ('SM', 'São Marino');
+INSERT INTO PAIS (iso, nome) VALUES ('ST', 'Sao Tomé e Príncipe');
+INSERT INTO PAIS (iso, nome) VALUES ('SA', 'Arábia Saudita');
+INSERT INTO PAIS (iso, nome) VALUES ('SN', 'Senegal');
+INSERT INTO PAIS (iso, nome) VALUES ('CS', 'Sérvia e Montenegro');
+INSERT INTO PAIS (iso, nome) VALUES ('SC', 'Seicheles');
+INSERT INTO PAIS (iso, nome) VALUES ('SL', 'República da Serra Leoa');
+INSERT INTO PAIS (iso, nome) VALUES ('SG', 'Singapura');
+INSERT INTO PAIS (iso, nome) VALUES ('SK', 'Eslováquia');
+INSERT INTO PAIS (iso, nome) VALUES ('SI', 'Eslovênia');
+INSERT INTO PAIS (iso, nome) VALUES ('SB', 'Ilhas Salomão');
+INSERT INTO PAIS (iso, nome) VALUES ('SO', 'Somália');
+INSERT INTO PAIS (iso, nome) VALUES ('ZA', 'África do Sul');
+INSERT INTO PAIS (iso, nome) VALUES ('GS', 'Ilhas Geórgia do Sul e Sandwich do Sul');
+INSERT INTO PAIS (iso, nome) VALUES ('ES', 'Espanha');
+INSERT INTO PAIS (iso, nome) VALUES ('LK', 'Sri Lanka');
+INSERT INTO PAIS (iso, nome) VALUES ('SD', 'Sudão');
+INSERT INTO PAIS (iso, nome) VALUES ('SR', 'Suriname');
+INSERT INTO PAIS (iso, nome) VALUES ('SJ', 'Esvalbarde');
+INSERT INTO PAIS (iso, nome) VALUES ('SZ', 'Suazilândia');
+INSERT INTO PAIS (iso, nome) VALUES ('SE', 'Suécia');
+INSERT INTO PAIS (iso, nome) VALUES ('CH', 'Suiça');
+INSERT INTO PAIS (iso, nome) VALUES ('SY', 'Síria');
+INSERT INTO PAIS (iso, nome) VALUES ('TW', 'Taiwan');
+INSERT INTO PAIS (iso, nome) VALUES ('TJ', 'Tajiquistão');
+INSERT INTO PAIS (iso, nome) VALUES ('TZ', 'Tanzânia');
+INSERT INTO PAIS (iso, nome) VALUES ('TH', 'Tailândia');
+INSERT INTO PAIS (iso, nome) VALUES ('TL', 'Timor-Leste');
+INSERT INTO PAIS (iso, nome) VALUES ('TG', 'Togo');
+INSERT INTO PAIS (iso, nome) VALUES ('TK', 'Toquelau');
+INSERT INTO PAIS (iso, nome) VALUES ('TO', 'Tonga');
+INSERT INTO PAIS (iso, nome) VALUES ('TT', 'Trinidad e Tobago');
+INSERT INTO PAIS (iso, nome) VALUES ('TN', 'Tunísia');
+INSERT INTO PAIS (iso, nome) VALUES ('TR', 'Turquia');
+INSERT INTO PAIS (iso, nome) VALUES ('TM', 'Turcomenistão');
+INSERT INTO PAIS (iso, nome) VALUES ('TC', 'Ilhas Turks e Caicos');
+INSERT INTO PAIS (iso, nome) VALUES ('TV', 'Tuvalu');
+INSERT INTO PAIS (iso, nome) VALUES ('UG', 'Uganda');
+INSERT INTO PAIS (iso, nome) VALUES ('UA', 'Ucrânia');
+INSERT INTO PAIS (iso, nome) VALUES ('AE', 'Emirados Árabes');
+INSERT INTO PAIS (iso, nome) VALUES ('GB', 'Reino Unido');
+INSERT INTO PAIS (iso, nome) VALUES ('US', 'Estados Unidos');
+INSERT INTO PAIS (iso, nome) VALUES ('UM', 'Ilhas Menores Distantes dos Estados Unidos');
+INSERT INTO PAIS (iso, nome) VALUES ('UY', 'Uruguai');
+INSERT INTO PAIS (iso, nome) VALUES ('UZ', 'Uzbequistão');
+INSERT INTO PAIS (iso, nome) VALUES ('VU', 'Vanuatu');
+INSERT INTO PAIS (iso, nome) VALUES ('VE', 'Venezuela');
+INSERT INTO PAIS (iso, nome) VALUES ('VN', 'Vietnam');
+INSERT INTO PAIS (iso, nome) VALUES ('VG', 'Ilhas Virgens Inglesas');
+INSERT INTO PAIS (iso, nome) VALUES ('VI', 'Ilhas Virgens (USA)');
+INSERT INTO PAIS (iso, nome) VALUES ('WF', 'Wallis e Futuna');
+INSERT INTO PAIS (iso, nome) VALUES ('EH', 'Saara Ocidental');
+INSERT INTO PAIS (iso, nome) VALUES ('YE', 'Iêmen');
+INSERT INTO PAIS (iso, nome) VALUES ('ZM', 'Zâmbia');
