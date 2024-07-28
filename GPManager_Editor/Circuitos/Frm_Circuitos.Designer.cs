@@ -40,21 +40,28 @@
             // 
             // Btn_Voltar
             // 
+            Btn_Voltar.BackColor = SystemColors.ActiveCaptionText;
+            Btn_Voltar.Font = new Font("Segoe UI", 12F);
+            Btn_Voltar.ForeColor = SystemColors.ButtonHighlight;
             Btn_Voltar.Location = new Point(12, 477);
             Btn_Voltar.Name = "Btn_Voltar";
             Btn_Voltar.Size = new Size(853, 45);
             Btn_Voltar.TabIndex = 0;
             Btn_Voltar.Text = "Voltar";
-            Btn_Voltar.UseVisualStyleBackColor = true;
+            Btn_Voltar.UseVisualStyleBackColor = false;
             // 
             // Btn_AddProva
             // 
+            Btn_AddProva.BackColor = SystemColors.ActiveCaptionText;
+            Btn_AddProva.Font = new Font("Segoe UI", 12F);
+            Btn_AddProva.ForeColor = SystemColors.ButtonHighlight;
             Btn_AddProva.Location = new Point(12, 426);
             Btn_AddProva.Name = "Btn_AddProva";
             Btn_AddProva.Size = new Size(202, 45);
             Btn_AddProva.TabIndex = 1;
             Btn_AddProva.Text = "Adicionar Prova";
-            Btn_AddProva.UseVisualStyleBackColor = true;
+            Btn_AddProva.UseVisualStyleBackColor = false;
+            Btn_AddProva.Click += Btn_AddProva_Click;
             // 
             // Lbl_Titulo
             // 
@@ -82,30 +89,39 @@
             // 
             // Btn_Sobe
             // 
+            Btn_Sobe.BackColor = SystemColors.ActiveCaptionText;
+            Btn_Sobe.Font = new Font("Segoe UI", 12F);
+            Btn_Sobe.ForeColor = SystemColors.ButtonHighlight;
             Btn_Sobe.Location = new Point(233, 426);
             Btn_Sobe.Name = "Btn_Sobe";
             Btn_Sobe.Size = new Size(202, 45);
             Btn_Sobe.TabIndex = 7;
             Btn_Sobe.Text = "Sobe";
-            Btn_Sobe.UseVisualStyleBackColor = true;
+            Btn_Sobe.UseVisualStyleBackColor = false;
             // 
             // Btn_Desce
             // 
+            Btn_Desce.BackColor = SystemColors.ActiveCaptionText;
+            Btn_Desce.Font = new Font("Segoe UI", 12F);
+            Btn_Desce.ForeColor = SystemColors.ButtonHighlight;
             Btn_Desce.Location = new Point(441, 426);
             Btn_Desce.Name = "Btn_Desce";
             Btn_Desce.Size = new Size(202, 45);
             Btn_Desce.TabIndex = 8;
             Btn_Desce.Text = "Desce";
-            Btn_Desce.UseVisualStyleBackColor = true;
+            Btn_Desce.UseVisualStyleBackColor = false;
             // 
             // Btn_DelProva
             // 
+            Btn_DelProva.BackColor = SystemColors.ActiveCaptionText;
+            Btn_DelProva.Font = new Font("Segoe UI", 12F);
+            Btn_DelProva.ForeColor = SystemColors.ButtonHighlight;
             Btn_DelProva.Location = new Point(663, 426);
             Btn_DelProva.Name = "Btn_DelProva";
             Btn_DelProva.Size = new Size(202, 45);
             Btn_DelProva.TabIndex = 9;
             Btn_DelProva.Text = "Remover prova";
-            Btn_DelProva.UseVisualStyleBackColor = true;
+            Btn_DelProva.UseVisualStyleBackColor = false;
             // 
             // Frm_Circuitos
             // 

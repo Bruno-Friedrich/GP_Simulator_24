@@ -69,6 +69,10 @@ namespace GPManager_Editor.Circuitos
             }
         }
 
-
+        private void Btn_AddProva_Click(object sender, EventArgs e)
+        {
+            Frm_AddCircuito frm_AddCircuito = new Frm_AddCircuito();
+            frm_AddCircuito.ShowDialog();
+        }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GPManager_Editor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe4147ae114402db379be87b05ca6617fcb65310")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4761fc081071aeed0937f93ca00380d01c50e9e")]
 [assembly: System.Reflection.AssemblyProductAttribute("GPManager_Editor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GPManager_Editor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

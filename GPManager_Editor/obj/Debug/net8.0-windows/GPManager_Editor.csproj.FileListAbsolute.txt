@@ -22,3 +22,4 @@ C:\Users\bruno\Desktop\Coding\Estudos\Projetos\GP_Simulator_24\GPManager_Editor\
 C:\Users\bruno\Desktop\Coding\Estudos\Projetos\GP_Simulator_24\GPManager_Editor\obj\Debug\net8.0-windows\GPManager_Editor.csproj.CopyComplete
 C:\Users\bruno\Desktop\Coding\Estudos\Projetos\GP_Simulator_24\GPManager_Editor\obj\Debug\net8.0-windows\GPManager_Editor.Frm_Menu.resources
 C:\Users\bruno\Desktop\Coding\Estudos\Projetos\GP_Simulator_24\GPManager_Editor\obj\Debug\net8.0-windows\GPManager_Editor.Circuitos.Frm_Circuitos.resources
+C:\Users\bruno\Desktop\Coding\Estudos\Projetos\GP_Simulator_24\GPManager_Editor\obj\Debug\net8.0-windows\GPManager_Editor.Circuitos.Frm_AddCircuito.resources
