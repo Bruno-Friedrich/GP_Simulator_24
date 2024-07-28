@@ -49,6 +49,7 @@
             Btn_Voltar.TabIndex = 0;
             Btn_Voltar.Text = "Voltar";
             Btn_Voltar.UseVisualStyleBackColor = false;
+            Btn_Voltar.Click += Btn_Voltar_Click;
             // 
             // Btn_AddProva
             // 
@@ -83,13 +84,15 @@
             Dt_Circuitos.Location = new Point(12, 56);
             Dt_Circuitos.MultiSelect = false;
             Dt_Circuitos.Name = "Dt_Circuitos";
+            Dt_Circuitos.ReadOnly = true;
             Dt_Circuitos.RowHeadersWidth = 51;
+            Dt_Circuitos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             Dt_Circuitos.Size = new Size(853, 354);
             Dt_Circuitos.TabIndex = 6;
             // 
             // Btn_Sobe
             // 
-            Btn_Sobe.BackColor = SystemColors.ActiveCaptionText;
+            Btn_Sobe.BackColor = SystemColors.ControlDarkDark;
             Btn_Sobe.Font = new Font("Segoe UI", 12F);
             Btn_Sobe.ForeColor = SystemColors.ButtonHighlight;
             Btn_Sobe.Location = new Point(233, 426);
@@ -122,6 +125,7 @@
             Btn_DelProva.TabIndex = 9;
             Btn_DelProva.Text = "Remover prova";
             Btn_DelProva.UseVisualStyleBackColor = false;
+            Btn_DelProva.Click += Btn_DelProva_Click;
             // 
             // Frm_Circuitos
             // 

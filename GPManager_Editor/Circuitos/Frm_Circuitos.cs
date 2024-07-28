@@ -1,4 +1,5 @@
 ﻿using GPManager_Editor.Operation;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -71,8 +72,66 @@ namespace GPManager_Editor.Circuitos
 
         private void Btn_AddProva_Click(object sender, EventArgs e)
         {
-            Frm_AddCircuito frm_AddCircuito = new Frm_AddCircuito();
+            Frm_AddCircuito frm_AddCircuito = new Frm_AddCircuito(Dt_Circuitos.Rows.Count);
             frm_AddCircuito.ShowDialog();
+
+            LoadCircuitos();
         }
+
+        private void Btn_Voltar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Btn_DelProva_Click(object sender, EventArgs e)
+        {
+            if (Dt_Circuitos.SelectedRows.Count > 0)
+            {
+                // Obtém a linha selecionada
+                DataGridViewRow selectedRow = Dt_Circuitos.SelectedRows[0];
+
+
+                int circuitoId = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+
+                // Confirma a exclusão
+                DialogResult result = MessageBox.Show($"Deseja realmente excluir o circuito selecionado? Circuito selecionado é {selectedRow.Cells["Prova"].Value}", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Remove o circuito do banco de dados
+                    string deleteQuery = $"{new DbConnection().search_path} DELETE FROM Circuito WHERE ID = @ID_Circuito;";
+
+                    using (DbConnection db = new DbConnection())
+                    {
+                        try
+                        {
+                            // Adiciona o parâmetro de ID_Circuito para evitar SQL Injection
+                            NpgsqlCommand command = new NpgsqlCommand(deleteQuery, db.Connection);
+                            command.Parameters.AddWithValue("@ID_Circuito", circuitoId);
+
+                            command.ExecuteNonQuery();
+
+                            // Remove a linha do DataGridView
+                            Dt_Circuitos.Rows.Remove(selectedRow);
+
+                            MessageBox.Show("Circuito excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Erro ao excluir o circuito: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            db.Dispose();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um circuito para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }
