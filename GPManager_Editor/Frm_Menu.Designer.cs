@@ -33,8 +33,6 @@
             label1 = new Label();
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
-            carregarToolStripMenuItem = new ToolStripMenuItem();
-            salvarToolStripMenuItem = new ToolStripMenuItem();
             sairToolStripMenuItem = new ToolStripSeparator();
             sairToolStripMenuItem1 = new ToolStripMenuItem();
             sobreToolStripMenuItem = new ToolStripMenuItem();
@@ -82,38 +80,22 @@
             // 
             // menuToolStripMenuItem
             // 
-            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { carregarToolStripMenuItem, salvarToolStripMenuItem, sairToolStripMenuItem, sairToolStripMenuItem1 });
+            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sairToolStripMenuItem, sairToolStripMenuItem1 });
             menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             menuToolStripMenuItem.Size = new Size(60, 24);
             menuToolStripMenuItem.Text = "Menu";
             // 
-            // carregarToolStripMenuItem
-            // 
-            carregarToolStripMenuItem.Image = Properties.Resources.Carregar;
-            carregarToolStripMenuItem.Name = "carregarToolStripMenuItem";
-            carregarToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
-            carregarToolStripMenuItem.Size = new Size(198, 26);
-            carregarToolStripMenuItem.Text = "Carregar";
-            // 
-            // salvarToolStripMenuItem
-            // 
-            salvarToolStripMenuItem.Image = Properties.Resources.Salvar;
-            salvarToolStripMenuItem.Name = "salvarToolStripMenuItem";
-            salvarToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            salvarToolStripMenuItem.Size = new Size(198, 26);
-            salvarToolStripMenuItem.Text = "Salvar";
-            // 
             // sairToolStripMenuItem
             // 
             sairToolStripMenuItem.Name = "sairToolStripMenuItem";
-            sairToolStripMenuItem.Size = new Size(195, 6);
+            sairToolStripMenuItem.Size = new Size(167, 6);
             // 
             // sairToolStripMenuItem1
             // 
-            sairToolStripMenuItem1.Image = Properties.Resources.Exit;
+            sairToolStripMenuItem1.Image = (Image)resources.GetObject("sairToolStripMenuItem1.Image");
             sairToolStripMenuItem1.Name = "sairToolStripMenuItem1";
             sairToolStripMenuItem1.ShortcutKeys = Keys.Alt | Keys.F4;
-            sairToolStripMenuItem1.Size = new Size(198, 26);
+            sairToolStripMenuItem1.Size = new Size(170, 26);
             sairToolStripMenuItem1.Text = "Sair";
             // 
             // sobreToolStripMenuItem
@@ -170,6 +152,7 @@
             Btn_Motor.TabIndex = 5;
             Btn_Motor.Text = "Motor";
             Btn_Motor.UseVisualStyleBackColor = false;
+            Btn_Motor.Click += Btn_Motor_Click;
             // 
             // Btn_Hall_Fama
             // 
@@ -223,7 +206,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.BackgroundEditor;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(703, 450);
             Controls.Add(Btn_Regras);
             Controls.Add(Btn_Equipes);
@@ -235,6 +218,7 @@
             Controls.Add(label2);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
@@ -254,8 +238,6 @@
         private Label label1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuToolStripMenuItem;
-        private ToolStripMenuItem carregarToolStripMenuItem;
-        private ToolStripMenuItem salvarToolStripMenuItem;
         private ToolStripSeparator sairToolStripMenuItem;
         private ToolStripMenuItem sairToolStripMenuItem1;
         private ToolStripMenuItem sobreToolStripMenuItem;

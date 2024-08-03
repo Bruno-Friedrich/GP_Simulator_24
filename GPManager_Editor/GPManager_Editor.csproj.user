@@ -10,5 +10,13 @@
     <Compile Update="Frm_Menu.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Motor\Frm_Motor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

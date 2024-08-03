@@ -85,14 +85,18 @@
             Dt_Circuitos.MultiSelect = false;
             Dt_Circuitos.Name = "Dt_Circuitos";
             Dt_Circuitos.ReadOnly = true;
+            Dt_Circuitos.RowHeadersVisible = false;
             Dt_Circuitos.RowHeadersWidth = 51;
             Dt_Circuitos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             Dt_Circuitos.Size = new Size(853, 354);
             Dt_Circuitos.TabIndex = 6;
+            Dt_Circuitos.CellDoubleClick += Dt_Circuitos_CellDoubleClick;
+            Dt_Circuitos.SelectionChanged += Dt_Circuitos_SelectionChanged;
             // 
             // Btn_Sobe
             // 
             Btn_Sobe.BackColor = SystemColors.ControlDarkDark;
+            Btn_Sobe.Enabled = false;
             Btn_Sobe.Font = new Font("Segoe UI", 12F);
             Btn_Sobe.ForeColor = SystemColors.ButtonHighlight;
             Btn_Sobe.Location = new Point(233, 426);
@@ -101,6 +105,7 @@
             Btn_Sobe.TabIndex = 7;
             Btn_Sobe.Text = "Sobe";
             Btn_Sobe.UseVisualStyleBackColor = false;
+            Btn_Sobe.Click += Btn_Sobe_Click;
             // 
             // Btn_Desce
             // 
@@ -113,6 +118,7 @@
             Btn_Desce.TabIndex = 8;
             Btn_Desce.Text = "Desce";
             Btn_Desce.UseVisualStyleBackColor = false;
+            Btn_Desce.Click += Btn_Desce_Click;
             // 
             // Btn_DelProva
             // 
@@ -132,6 +138,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(877, 534);
+            ControlBox = false;
             Controls.Add(Btn_DelProva);
             Controls.Add(Btn_Desce);
             Controls.Add(Btn_Sobe);
@@ -139,6 +146,8 @@
             Controls.Add(Lbl_Titulo);
             Controls.Add(Btn_AddProva);
             Controls.Add(Btn_Voltar);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "Frm_Circuitos";
             ShowIcon = false;
             Text = "Circuitos";

@@ -1,4 +1,5 @@
 using GPManager_Editor.Circuitos;
+using GPManager_Editor.Motor;
 
 namespace GPManager_Editor
 {
@@ -13,6 +14,12 @@ namespace GPManager_Editor
         {
             Frm_Circuitos frmCircuitos = new Frm_Circuitos();
             frmCircuitos.ShowDialog();
+        }
+
+        private void Btn_Motor_Click(object sender, EventArgs e)
+        {
+            Frm_Motor frmMotor = new Frm_Motor();
+            frmMotor.ShowDialog();
         }
     }
 }

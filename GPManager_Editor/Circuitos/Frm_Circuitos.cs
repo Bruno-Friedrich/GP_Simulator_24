@@ -25,7 +25,7 @@ namespace GPManager_Editor.Circuitos
 
         private void LoadCircuitos()
         {
-            string query = $"{new DbConnection().search_path} SELECT Circuito.ID, Circuito.NUM, Pais.NOME AS \"NOME\", Circuito.PROVA, Circuito.CIRCUITO, Circuito.RETAS, Circuito.CURVAS, Circuito.VOLTAS, Circuito.TEMPO_BASE FROM Circuito JOIN Pais ON Circuito.ID_PAIS = Pais.ID;";
+            string query = $"{new DbConnection().search_path} SELECT Circuito.ID, Circuito.NUM, Pais.NOME AS \"NOME\", Circuito.PROVA, Circuito.CIRCUITO, Circuito.RETAS, Circuito.CURVAS, Circuito.VOLTAS, Circuito.TEMPO_BASE FROM Circuito JOIN Pais ON Circuito.ID_PAIS = Pais.ID ORDER BY NUM ASC;";
 
 
             using (DbConnection db = new DbConnection())
@@ -70,6 +70,7 @@ namespace GPManager_Editor.Circuitos
             }
         }
 
+
         private void Btn_AddProva_Click(object sender, EventArgs e)
         {
             Frm_AddCircuito frm_AddCircuito = new Frm_AddCircuito(Dt_Circuitos.Rows.Count);
@@ -87,32 +88,41 @@ namespace GPManager_Editor.Circuitos
         {
             if (Dt_Circuitos.SelectedRows.Count > 0)
             {
-                // Obtém a linha selecionada
                 DataGridViewRow selectedRow = Dt_Circuitos.SelectedRows[0];
 
-
                 int circuitoId = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                int circuitoNUM = Convert.ToInt32(selectedRow.Cells["$"].Value);
 
-                // Confirma a exclusão
                 DialogResult result = MessageBox.Show($"Deseja realmente excluir o circuito selecionado? Circuito selecionado é {selectedRow.Cells["Prova"].Value}", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    // Remove o circuito do banco de dados
                     string deleteQuery = $"{new DbConnection().search_path} DELETE FROM Circuito WHERE ID = @ID_Circuito;";
+                    string updateQuery = $"{new DbConnection().search_path} UPDATE Circuito SET NUM = NUM - 1 WHERE NUM > @NUM_Circuito;";
 
                     using (DbConnection db = new DbConnection())
                     {
                         try
                         {
-                            // Adiciona o parâmetro de ID_Circuito para evitar SQL Injection
-                            NpgsqlCommand command = new NpgsqlCommand(deleteQuery, db.Connection);
-                            command.Parameters.AddWithValue("@ID_Circuito", circuitoId);
+                            NpgsqlCommand deleteCommand = new NpgsqlCommand(deleteQuery, db.Connection);
+                            deleteCommand.Parameters.AddWithValue("@ID_Circuito", circuitoId);
 
-                            command.ExecuteNonQuery();
+                            deleteCommand.ExecuteNonQuery();
 
-                            // Remove a linha do DataGridView
+                            NpgsqlCommand updateCommand = new NpgsqlCommand(updateQuery, db.Connection);
+                            updateCommand.Parameters.AddWithValue("@NUM_Circuito", circuitoNUM);
+
+                            updateCommand.ExecuteNonQuery();
+
                             Dt_Circuitos.Rows.Remove(selectedRow);
+
+                            foreach (DataGridViewRow row in Dt_Circuitos.Rows)
+                            {
+                                if (Convert.ToInt32(row.Cells["$"].Value) > circuitoNUM)
+                                {
+                                    row.Cells["$"].Value = Convert.ToInt32(row.Cells["$"].Value) - 1;
+                                }
+                            }
 
                             MessageBox.Show("Circuito excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -133,5 +143,143 @@ namespace GPManager_Editor.Circuitos
             }
         }
 
+        private void Dt_Circuitos_SelectionChanged(object sender, EventArgs e)
+        {
+            if (Dt_Circuitos.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = Dt_Circuitos.SelectedRows[0];
+                int circuitoNUM = Convert.ToInt32(selectedRow.Cells["$"].Value);
+
+                int ultimoNUM = Dt_Circuitos.Rows.Count;
+
+                if (circuitoNUM == 1)
+                {
+                    Btn_Sobe.BackColor = SystemColors.ControlDarkDark;
+                    Btn_Sobe.Enabled = false;
+
+                    Btn_Desce.BackColor = SystemColors.ActiveCaptionText;
+                    Btn_Desce.Enabled = true;
+                }
+                else if (circuitoNUM == ultimoNUM)
+                {
+                    Btn_Sobe.BackColor = SystemColors.ActiveCaptionText;
+                    Btn_Sobe.Enabled = true;
+
+                    Btn_Desce.BackColor = SystemColors.ControlDarkDark;
+                    Btn_Desce.Enabled = false;
+                }
+                else
+                {
+                    Btn_Sobe.BackColor = SystemColors.ActiveCaptionText;
+                    Btn_Sobe.Enabled = true;
+
+                    Btn_Desce.BackColor = SystemColors.ActiveCaptionText;
+                    Btn_Desce.Enabled = true;
+                }
+            }
+            else
+            {
+                Btn_Sobe.BackColor = SystemColors.ControlDarkDark;
+                Btn_Sobe.Enabled = false;
+
+                Btn_Desce.BackColor = SystemColors.ControlDarkDark;
+                Btn_Desce.Enabled = false;
+            }
+        }
+
+        private void Btn_Sobe_Click(object sender, EventArgs e)
+        {
+            if (Dt_Circuitos.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = Dt_Circuitos.SelectedRows[0];
+                int currentNUM = Convert.ToInt32(selectedRow.Cells["$"].Value);
+                int newNUM = currentNUM - 1;
+
+                // Encontra a linha acima (newNUM)
+                foreach (DataGridViewRow row in Dt_Circuitos.Rows)
+                {
+                    if (Convert.ToInt32(row.Cells["$"].Value) == newNUM)
+                    {
+                        // Troca os valores de NUM
+                        row.Cells["$"].Value = currentNUM;
+                        selectedRow.Cells["$"].Value = newNUM;
+
+                        // Atualiza o banco de dados
+                        using (DbConnection db = new DbConnection())
+                        {
+                            string query1 = $"{new DbConnection().search_path} UPDATE Circuito SET NUM = @NUM WHERE ID = @ID;";
+                            NpgsqlCommand command1 = new NpgsqlCommand(query1, db.Connection);
+                            command1.Parameters.AddWithValue("@NUM", currentNUM);
+                            command1.Parameters.AddWithValue("@ID", row.Cells["ID"].Value);
+                            command1.ExecuteNonQuery();
+
+                            string query2 = $"{new DbConnection().search_path} UPDATE Circuito SET NUM = @NUM WHERE ID = @ID;";
+                            NpgsqlCommand command2 = new NpgsqlCommand(query2, db.Connection);
+                            command2.Parameters.AddWithValue("@NUM", newNUM);
+                            command2.Parameters.AddWithValue("@ID", selectedRow.Cells["ID"].Value);
+                            command2.ExecuteNonQuery();
+                        }
+
+                        // Reordena as linhas no DataGridView
+                        Dt_Circuitos.Sort(Dt_Circuitos.Columns["$"], System.ComponentModel.ListSortDirection.Ascending);
+                        Dt_Circuitos.ClearSelection();
+                        Dt_Circuitos.Rows[newNUM - 1].Selected = true;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        private void Btn_Desce_Click(object sender, EventArgs e)
+        {
+            if (Dt_Circuitos.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = Dt_Circuitos.SelectedRows[0];
+                int currentNUM = Convert.ToInt32(selectedRow.Cells["$"].Value);
+                int newNUM = currentNUM + 1;
+
+                // Encontra a linha abaixo (newNUM)
+                foreach (DataGridViewRow row in Dt_Circuitos.Rows)
+                {
+                    if (Convert.ToInt32(row.Cells["$"].Value) == newNUM)
+                    {
+                        row.Cells["$"].Value = currentNUM;
+                        selectedRow.Cells["$"].Value = newNUM;
+
+                        using (DbConnection db = new DbConnection())
+                        {
+                            string query1 = $"{new DbConnection().search_path} UPDATE Circuito SET NUM = @NUM WHERE ID = @ID;";
+                            NpgsqlCommand command1 = new NpgsqlCommand(query1, db.Connection);
+                            command1.Parameters.AddWithValue("@NUM", currentNUM);
+                            command1.Parameters.AddWithValue("@ID", row.Cells["ID"].Value);
+                            command1.ExecuteNonQuery();
+
+                            string query2 = $"{new DbConnection().search_path} UPDATE Circuito SET NUM = @NUM WHERE ID = @ID;";
+                            NpgsqlCommand command2 = new NpgsqlCommand(query2, db.Connection);
+                            command2.Parameters.AddWithValue("@NUM", newNUM);
+                            command2.Parameters.AddWithValue("@ID", selectedRow.Cells["ID"].Value);
+                            command2.ExecuteNonQuery();
+                        }
+
+                        // Reordena as linhas no DataGridView
+                        Dt_Circuitos.Sort(Dt_Circuitos.Columns["$"], System.ComponentModel.ListSortDirection.Ascending);
+                        Dt_Circuitos.ClearSelection();
+                        Dt_Circuitos.Rows[newNUM - 1].Selected = true;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void Dt_Circuitos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Frm_AddCircuito frm_AddCircuito = new Frm_AddCircuito(Dt_Circuitos.SelectedRows[0]);
+            frm_AddCircuito.ShowDialog();
+
+            LoadCircuitos();
+        }
     }
 }

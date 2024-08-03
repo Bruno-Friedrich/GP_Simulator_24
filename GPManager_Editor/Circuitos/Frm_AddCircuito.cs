@@ -27,11 +27,30 @@ namespace GPManager_Editor.Circuitos
 
             this.numNovoCircuito = numNovoCircuito + 1;
 
-
-            LoadPaises();
+            string pais = "";
+            LoadPaises(pais);
         }
 
-        private void LoadPaises()
+        public Frm_AddCircuito (DataGridViewRow selectedRow)
+        {
+            InitializeComponent();
+
+            Txt_Nome.Text = Convert.ToString(selectedRow.Cells["Prova"].Value);
+            Txt_Circuito.Text = Convert.ToString(selectedRow.Cells["Circuito"].Value);
+            UpDwn_Voltas.Value = Convert.ToInt32(selectedRow.Cells["Voltas"].Value);
+            UpDwn_Curvas.Value = Convert.ToInt32(selectedRow.Cells["Curvas"].Value);
+            UpDwn_Retas.Value = Convert.ToInt32(selectedRow.Cells["Retas"].Value);
+            
+            
+            //UpDwn_Minutos.Value = Convert.ToInt32(selectedRow.)
+
+            Cmb_Pais.SelectedIndexChanged += Cmb_Pais_SelectedIndexChanged;
+
+            string pais = Convert.ToString(selectedRow.Cells["País"].Value);
+            LoadPaises(pais);
+        }
+
+        private void LoadPaises(string pais)
         {
             string query = $"{new DbConnection().search_path} SELECT ID, NOME FROM Pais;";
 
@@ -47,14 +66,26 @@ namespace GPManager_Editor.Circuitos
                         string name = reader["NOME"].ToString();
                         Cmb_Pais.Items.Add(new ComboBoxItem(name, id));
                     }
-
-                    // Seleciona o país "Afeganistão" se ele estiver na lista
-                    foreach (ComboBoxItem item in Cmb_Pais.Items)
+                    if (pais == "")
                     {
-                        if (item.Name == "Afeganistão")
+                        foreach (ComboBoxItem item in Cmb_Pais.Items)
                         {
-                            Cmb_Pais.SelectedItem = item;
-                            break;
+                            if (item.Name == "Afeganistão")
+                            {
+                                Cmb_Pais.SelectedItem = item;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (ComboBoxItem item in Cmb_Pais.Items)
+                        {
+                            if (item.Name == pais)
+                            {
+                                Cmb_Pais.SelectedItem = item;
+                                break;
+                            }
                         }
                     }
                 }
